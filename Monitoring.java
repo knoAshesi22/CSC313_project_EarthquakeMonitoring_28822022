@@ -28,6 +28,14 @@ public class Observatory {
         this.events = events;
     }
 
+    public Observatory(String name, String country, Calendar startYear, double area) {
+        this.name = name;
+        this.country = country;
+        this.startYear = startYear;
+        this.area = area;
+        this.events = new ArrayList<Observatory>();
+    }
+
     public String getName() {
         return name;
     }
