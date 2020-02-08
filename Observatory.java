@@ -69,8 +69,14 @@ public class Observatory {
 
 
     public void saveToFile(){
-
-
+      PrintWriter printWriter = null;
+      try {
+        printWriter = new PrintWriter(new FileOutputStream(fileName, true));
+      }catch(FileNotFoundException f) {
+        f.getMessage();
+      }
+      printWriter.println(this);
+      printWriter.close();
     }
 
 
