@@ -1,25 +1,22 @@
-
-
-//Fields: the name of the observatory, the name of the country in which it is located,
-// the year in which “galamsey” observations started, the area covered by the observatory
-// (in square kilometers) and a list of “galamsey” events that it has recorded.
-//[7 points] Methods: Accessor (2.5), Mutator (2.5), Inherited (1), Constructor (1)
-
-import java.util.Calendar;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
+import java.io.FileNotFoundException;
+import java.time.Year;
 import java.util.HashMap;
+import java.util.ArrayList;
 
 public class Observatory {
 
     private String name;
     private String country;
-    private Calendar startYear;
+    private Year startYear;
     private double area;
-    private Galamsey[] events;
+    private ArrayList<Galamsey> events;
     static final String fileName="observatories.txt";
 
 
 
-    public Observatory(String name, String country, Calendar startYear, double area, Galamsey[] events) {
+    public Observatory(String name, String country, Year startYear, double area, ArrayList<Galamsey> events) {
         this.name = name;
         this.country = country;
         this.startYear = startYear;
@@ -43,11 +40,11 @@ public class Observatory {
         this.country = country;
     }
 
-    public Calendar getStartYear() {
+    public Year getStartYear() {
         return startYear;
     }
 
-    public void setStartYear(Calendar startYear) {
+    public void setStartYear(Year startYear) {
         this.startYear = startYear;
     }
 
@@ -59,11 +56,11 @@ public class Observatory {
         this.area = area;
     }
 
-    public Galamsey[] getEvents() {
+    public ArrayList<Galamsey> getEvents() {
         return events;
     }
 
-    public void setEvents(Galamsey[] events) {
+    public void setEvents(ArrayList<Galamsey> events) {
         this.events = events;
     }
 
@@ -75,8 +72,36 @@ public class Observatory {
       }catch(FileNotFoundException f) {
         f.getMessage();
       }
-      printWriter.println(this);
+      printWriter.printf("%-20s\t %-20s\t %-4T\t %-5.2d\t",name,country, startYear, area);
+      printWriter.print("[");
+      for(Galamsey i: events){
+        printWriter.print("(");
+        printWriter.printf("%-6s, (%-8d,%-8d),%s", i.getVegColour(),i.getPosition().getLongitude(), i.getPosition().getLatitude(),i.getYear());
+        printWriter.print(") ");
+        }
+        printWriter.print("]");
+
       printWriter.close();
+    }
+
+    public int maxColourvalue(){
+      int m =1;
+      for(Galamsey n: events){
+        if (n.getColourValue()>=m){ m=n.getColourValue();}
+      }
+      return m;
+    }
+    public int avgColourValue(){
+      int a=0;
+      for(Galamsey n: events){
+       a=a+(n.getColourValue()/events.size() );
+     }
+      return a;
+    }
+    public ArrayList<Galamsey> valGreaterThan(int v){
+      ArrayList<Galamsey> cop=new ArrayList<Galamsey>(events);
+      cop.removeIf(n -> n.getColourValue()<v);
+      return cop;
     }
 
 
@@ -154,7 +179,18 @@ public class Observatory {
      */
     @Override
     public String toString() {
-        return super.toString();
+      String ans;
+      ans="Observatory name: " + name + "\n"+
+          "Country: " + country + "\n"+
+          "Start year: " + startYear + "\n"+
+          "Area(km): " + area + "\n"+
+          "Number of events: "+ events.size()+ "\n"+
+          "Events: " +"\n"+ events;
+
+
+        return ans;
+
+
     }
 
 

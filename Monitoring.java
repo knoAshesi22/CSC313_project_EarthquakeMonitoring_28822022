@@ -1,71 +1,20 @@
 
-
-//Fields: the name of the observatory, the name of the country in which it is located,
-// the year in which “galamsey” observations started, the area covered by the observatory
-// (in square kilometers) and a list of “galamsey” events that it has recorded.
-//[7 points] Methods: Accessor (2.5), Mutator (2.5), Inherited (1), Constructor (1)
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
-public class Observatory {
-
-    private String name;
-    private String country;
-    private Calendar startYear;
-    private double area;
+public class Monitoring {
     private ArrayList<Observatory> events;
     static final String fileName="observatories.txt";
 
 
 
-    public Observatory(String name, String country, Calendar startYear, double area, ArrayList<Observatory> events) {
-        this.name = name;
-        this.country = country;
-        this.startYear = startYear;
-        this.area = area;
+    public Monitoring(ArrayList<Observatory> events) {
         this.events = events;
     }
 
-    public Observatory(String name, String country, Calendar startYear, double area) {
-        this.name = name;
-        this.country = country;
-        this.startYear = startYear;
-        this.area = area;
+    public Monitoring() {
         this.events = new ArrayList<Observatory>();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public Calendar getStartYear() {
-        return startYear;
-    }
-
-    public void setStartYear(Calendar startYear) {
-        this.startYear = startYear;
-    }
-
-    public double getArea() {
-        return area;
-    }
-
-    public void setArea(double area) {
-        this.area = area;
     }
 
     public ArrayList<Observatory> getEvents() {
@@ -77,9 +26,36 @@ public class Observatory {
     }
 
 
-    public void saveToFile(){
+    public void loadObservatories(){
+      Scanner rf = new Scanner(new File(fileName));
+      rf.useDelimiter("[()]|,|\\t");
 
+      while(rf.hasNextLine()){
+        String n= rf.next();
+        String c= rf.next();
+        Year s= Year.parse(rf.next());
+        String col= rf.next();
+        double a= rf.nextDouble();
+        ArrayList<Galamsey> e;
+        Observatory ob= new Observatory(n,c,s,a,e);
+        events.add(ob);
+        while(rf.next()!="\n"){
+          String col= rf.next();
+          double p1= rf.nextDouble();
+          double p2= rf.nextDouble();
+          Year y= Year.parse(rf.next());
+          ob.getEvents().add(new galamsey(col,new Position(p1,p2),y));
+        }
 
+    }
+    public Observatory largestColVal(){}
+    public int largestColourVal(){
+      int fin= 0;
+      for(){}
+      return fin;
+    }
+    public ArrayList<Galamsey> greaterThanVal(int v){
+      ArrayList<Galamsey> final=new ArrayList<Galamsey>();
     }
 
 
