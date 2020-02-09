@@ -1,61 +1,79 @@
-
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.time.Year;
 import java.util.HashMap;
+import java.util.Scanner;
+import java.io.File;
 
 public class Monitoring {
-    private ArrayList<Observatory> events;
+    private ArrayList<Observatory> observatories;
     static final String fileName="observatories.txt";
 
 
 
-    public Monitoring(ArrayList<Observatory> events) {
-        this.events = events;
+    public Monitoring(ArrayList<Observatory> observatories) {
+        this.observatories = observatories;
     }
 
     public Monitoring() {
-        this.events = new ArrayList<Observatory>();
+        this.observatories = new ArrayList<Observatory>();
     }
 
-    public ArrayList<Observatory> getEvents() {
-        return events;
+    public ArrayList<Observatory> getObservatories() {
+        return observatories;
     }
 
-    public void setEvents(ArrayList<Observatory> events) {
-        this.events = events;
+    public void setobservatories(ArrayList<Observatory> observatories) {
+        this.observatories = observatories;
     }
 
 
     public void loadObservatories(){
-      Scanner rf = new Scanner(new File(fileName));
-      rf.useDelimiter("[()]|,|\\t");
+      try{
+        Scanner rf = new Scanner(new File(fileName));
+        rf.useDelimiter("[()]|,|\\t");
+        while(rf.hasNextLine()){
+          String n= rf.next();
+          String c= rf.next();
+          Year s= Year.parse(rf.next());
+          double a= rf.nextDouble();
+          ArrayList<Galamsey> e = new ArrayList<Galamsey>();
+          Observatory ob= new Observatory(n,c,s,a,e);
+          observatories.add(ob);
+          while(rf.next()!="\n"){
+            String col= rf.next();
+            double p1= rf.nextDouble();
+            double p2= rf.nextDouble();
+            Year y= Year.parse(rf.next());
+            ob.getEvents().add(new Galamsey(col,new Position(p1,p2),y));
+          }
+        }
+      }catch(FileNotFoundException t){t.getMessage();}
 
-      while(rf.hasNextLine()){
-        String n= rf.next();
-        String c= rf.next();
-        Year s= Year.parse(rf.next());
-        String col= rf.next();
-        double a= rf.nextDouble();
-        ArrayList<Galamsey> e;
-        Observatory ob= new Observatory(n,c,s,a,e);
-        events.add(ob);
-        while(rf.next()!="\n"){
-          String col= rf.next();
-          double p1= rf.nextDouble();
-          double p2= rf.nextDouble();
-          Year y= Year.parse(rf.next());
-          ob.getEvents().add(new galamsey(col,new Position(p1,p2),y));
+    }
+
+    public Observatory largestColVal(){
+      int m=0;
+      Observatory mob = new Observatory();
+      for (Observatory o: observatories){
+        if (o.maxColourValue()>m){
+          m=o.maxColourValue();
+          mob=o;
         }
 
+      }
+      return mob;
     }
-    public Observatory largestColVal(){}
+
     public int largestColourVal(){
-      int fin= 0;
-      for(){}
-      return fin;
+      return largestColVal().maxColourValue();
     }
     public ArrayList<Galamsey> greaterThanVal(int v){
-      ArrayList<Galamsey> final=new ArrayList<Galamsey>();
+      ArrayList<Galamsey> fin =new ArrayList<Galamsey>();
+      for(Observatory o: observatories){
+        fin.addAll(o.colValGreaterThan(v));
+      }
+      return fin;
     }
 
 

@@ -15,7 +15,8 @@ public class Observatory {
     static final String fileName="observatories.txt";
 
 
-
+    public Observatory() { }
+    
     public Observatory(String name, String country, Year startYear, double area, ArrayList<Galamsey> events) {
         this.name = name;
         this.country = country;
@@ -84,7 +85,7 @@ public class Observatory {
       printWriter.close();
     }
 
-    public int maxColourvalue(){
+    public int maxColourValue(){
       int m =1;
       for(Galamsey n: events){
         if (n.getColourValue()>=m){ m=n.getColourValue();}
@@ -98,7 +99,7 @@ public class Observatory {
      }
       return a;
     }
-    public ArrayList<Galamsey> valGreaterThan(int v){
+    public ArrayList<Galamsey> colValGreaterThan(int v){
       ArrayList<Galamsey> cop=new ArrayList<Galamsey>(events);
       cop.removeIf(n -> n.getColourValue()<v);
       return cop;
