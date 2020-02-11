@@ -16,6 +16,12 @@ public class Observatory {
     private Year startYear;
     private double area;
     private ArrayList<Galamsey> events;
+
+
+    private  double largest;
+    private  double smallest;
+    private  double sumColor;
+
     static final String fileName="observatories.txt";
 
 
@@ -78,8 +84,23 @@ public class Observatory {
         this.events = events;
     }
 
+    public double getLargest() {
+        return largest;
+    }
+
+    public double getSmallest() {
+        return smallest;
+    }
+
+    public double getAverageColor() {
+        return (sumColor/events.size());
+    }
+
     public void addEvent(Galamsey event){
         events.add(event);
+        largest=largest>=event.getColourValue()?largest:event.getColourValue();
+        smallest=smallest<=event.getColourValue()?smallest:event.getColourValue();
+        sumColor+=event.getColourValue();
     }
 
     public String fileFormat(){
