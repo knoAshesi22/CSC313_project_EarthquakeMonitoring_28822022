@@ -20,7 +20,6 @@ public class MonitoringIO {
         System.out.println("Welcome to the Galamsey Monitoring program!");
         System.out.println("Enter:\n\'1\' to select an existing observatory. " +
                 "\n\'2\' to create a new observatory." +
-                "\n\'3\' to view Galamsey statistics."+
                 "\nAny other key to quit.");
 
         String choice=input.nextLine();
@@ -31,13 +30,6 @@ public class MonitoringIO {
             else if (choice.equals("2")){
                 createObservatory();
             }
-//            else if(choice.equals("3")){
-//                genStatistics();
-//            }
-//            else {
-//                System.exit(0);
-////                return;
-//            }
 
 
             System.out.println();
@@ -82,6 +74,8 @@ public class MonitoringIO {
 
             }
             else return;
+            System.out.println("Enter a new choice:");
+            ans=input.nextLine();
 
 
 
