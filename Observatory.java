@@ -1,9 +1,13 @@
-import java.io.FileOutputStream;
-import java.io.PrintWriter;
-import java.io.FileNotFoundException;
+import jdk.nashorn.internal.runtime.regexp.joni.Regex;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.Year;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class Observatory {
 
@@ -16,13 +20,22 @@ public class Observatory {
 
 
     public Observatory() { }
-    
+
+    public Observatory(String name, String country, Year startYear, double area) {
+        this.name = name;
+        this.country = country;
+        this.startYear = startYear;
+        this.area = area;
+        this.events = new ArrayList<Galamsey>();
+    }
+
     public Observatory(String name, String country, Year startYear, double area, ArrayList<Galamsey> events) {
         this.name = name;
         this.country = country;
         this.startYear = startYear;
         this.area = area;
         this.events = events;
+        saveToFile();
     }
 
     public String getName() {
@@ -65,44 +78,71 @@ public class Observatory {
         this.events = events;
     }
 
+    public void addEvent(Galamsey event){
+        events.add(event);
+    }
+
+    public String fileFormat(){
+
+        String details=name+":::"+country+" "+startYear.getValue()+" "+area;
+        String gt;
+        for (Galamsey i:events) {
+            gt=i.getVegColour()+" "+i.getPosition().getLatitude()+" "+i.getPosition().getLongitude()+" "+i.getYear().getValue();
+            details+="\t\t"+gt;
+        }
+        return details;
+
+    }
 
     public void saveToFile(){
-      PrintWriter printWriter = null;
-      try {
-        printWriter = new PrintWriter(new FileOutputStream(fileName, true));
-      }catch(FileNotFoundException f) {
-        f.getMessage();
-      }
-      printWriter.printf("%-20s\t %-20s\t %-4T\t %-5.2d\t",name,country, startYear, area);
-      printWriter.print("[");
-      for(Galamsey i: events){
-        printWriter.print("(");
-        printWriter.printf("%-6s, (%-8d,%-8d),%s", i.getVegColour(),i.getPosition().getLongitude(), i.getPosition().getLatitude(),i.getYear());
-        printWriter.print(") ");
-        }
-        printWriter.print("]");
 
-      printWriter.close();
+        try {
+            String content = new String ( Files.readAllBytes( Paths.get(fileName) ) ).trim();
+            File file=new File(fileName);
+            PrintWriter writer;
+            String pat="^"+name+":::+";
+            pat=name+"\\:\\:\\:.+";
+
+            if(content.contains(name+":::")){
+
+                System.out.println(content);
+                System.out.println();
+                content=content.replaceAll(pat,fileFormat());
+                writer=new PrintWriter(new FileOutputStream(fileName,false));
+                writer.println(content);
+            }
+            else {
+                writer=new PrintWriter(new FileOutputStream(fileName,true));
+                writer.println(fileFormat());
+            }
+            writer.close();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     public int maxColourValue(){
-      int m =1;
-      for(Galamsey n: events){
-        if (n.getColourValue()>=m){ m=n.getColourValue();}
-      }
-      return m;
+        int m =1;
+        for(Galamsey n: events){
+            if (n.getColourValue()>=m){ m=n.getColourValue();}
+        }
+        return m;
     }
     public int avgColourValue(){
-      int a=0;
-      for(Galamsey n: events){
-       a=a+(n.getColourValue()/events.size() );
-     }
-      return a;
+        int a=0;
+        for(Galamsey n: events){
+            a=a+(n.getColourValue()/events.size() );
+        }
+        return a;
     }
     public ArrayList<Galamsey> colValGreaterThan(int v){
-      ArrayList<Galamsey> cop=new ArrayList<Galamsey>(events);
-      cop.removeIf(n -> n.getColourValue()<v);
-      return cop;
+        ArrayList<Galamsey> cop=new ArrayList<Galamsey>(events);
+        cop.removeIf(n -> n.getColourValue()<v);
+        return cop;
     }
 
 
@@ -180,13 +220,13 @@ public class Observatory {
      */
     @Override
     public String toString() {
-      String ans;
-      ans="Observatory name: " + name + "\n"+
-          "Country: " + country + "\n"+
-          "Start year: " + startYear + "\n"+
-          "Area(km): " + area + "\n"+
-          "Number of events: "+ events.size()+ "\n"+
-          "Events: " +"\n"+ events;
+        String ans;
+        ans="Observatory name: " + name + "\n"+
+                "Country: " + country + "\n"+
+                "Start year: " + startYear + "\n"+
+                "Area(km): " + area + "\n"+
+                "Number of events: "+ events.size()+ "\n"+
+                "Events: " +"\n"+ events;
 
 
         return ans;
