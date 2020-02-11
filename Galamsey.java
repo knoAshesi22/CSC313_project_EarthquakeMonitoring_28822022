@@ -1,4 +1,3 @@
-
 //Fields: vegetation colour, colour value, position (latitude and longitude) and year of the event.
 //[6 points] Methods: Accessor (2), Mutator (2), Inherited/Auxiliary (1), Constructor (1)
 
@@ -23,6 +22,17 @@ public class Galamsey {
         this.colourValue=genColourValue(this.vegColour);
     }
 
+    public Galamsey(String vegColour, double lat, double lon, Year year) {
+        this.vegColour = genColourEnum(vegColour);
+        this.position = new Position(lat,lon);
+        this.year = year;
+        this.colourValue=genColourValue(this.vegColour);
+    }
+
+    public static COLOURS[] getPossibleColours(){
+        return COLOURS.values();
+    }
+
 
     public COLOURS getVegColour() {
         return vegColour;
@@ -30,7 +40,7 @@ public class Galamsey {
 
     public COLOURS genColourEnum(String vegColour){
         try{
-            this.vegColour=COLOURS.valueOf(vegColour);
+            this.vegColour=COLOURS.valueOf(vegColour.toUpperCase());
         }
         catch(Exception e) {
             this.vegColour=COLOURS.NA;
@@ -43,10 +53,13 @@ public class Galamsey {
         switch (vegColour){
             case GREEN:
                 colourValue=1;
+                break;
             case YELLOW:
                 colourValue=2;
+                break;
             case BROWN:
                 colourValue=3;
+                break;
             default:
                 colourValue=0;
 
@@ -110,9 +123,4 @@ public class Galamsey {
     public int hashCode() {
         return Objects.hash(vegColour, colourValue, position, year);
     }
-
-
-
-
-
 }
