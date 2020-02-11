@@ -9,17 +9,15 @@ import java.util.Set;
 
 public class MonitoringIO {
 
+    static Monitoring monitor=new Monitoring();
+    static Scanner input=new Scanner(System.in);
+
     public static void main(String[] args) {
-        System.out.println("Welcome to the Galamsey Monitoring program!");
-        Scanner input=new Scanner(System.in);
-        Monitoring monitor=new Monitoring();
-        genMenu(monitor,input);
-
-
-
+        genMenu();
     }
 
-    public static void genMenu(Monitoring monitor, Scanner input){
+    public static void genMenu(){
+        System.out.println("Welcome to the Galamsey Monitoring program!");
         System.out.println("Enter:\n\'1\' to select an existing observatory. " +
                 "\n\'2\' to create a new observatory." +
                 "\n\'3\' to view Galamsey statistics."+
@@ -28,17 +26,18 @@ public class MonitoringIO {
         String choice=input.nextLine();
         while(choice.matches("[123]")){
             if(choice.equals("1")){
-                showObservatory(monitor,input);
+                showObservatory();
             }
             else if (choice.equals("2")){
-                createObservatory(monitor,input);
+                createObservatory();
             }
-            else if(choice.equals("3")){
-                genStatistics();
-            }
-            else {
-                System.exit(0);
-            }
+//            else if(choice.equals("3")){
+//                genStatistics();
+//            }
+//            else {
+//                System.exit(0);
+////                return;
+//            }
 
 
             System.out.println();
@@ -46,11 +45,11 @@ public class MonitoringIO {
                     "\n\'2\' to create a new observatory." +
                     "\n\'3\' to view Galamsey statistics."+
                     "\nAny other key to quit.");
-            choice=input.next();
+            choice=input.nextLine();
         }
     }
 
-    public static void showObservatory(Monitoring monitor, Scanner input){
+    public static void showObservatory(){
         System.out.println("Below is a list of current observatory names:");
 
         System.out.println(monitor.getObservatoryNames());
@@ -64,11 +63,35 @@ public class MonitoringIO {
         }
         Observatory curObs=monitor.getObservatories().get(Integer.parseInt(ans)-1);
         System.out.println(("Thank you for selecting observatory " + curObs.getName()));
-        System.out.println("Below is information on observatory " + curObs.getName() + ":");
-        System.out.println(curObs);
+
+        System.out.println("Enter:" +
+                "\n1.View full Observatory information" +
+                "\n2.View summary Galamsey statistics" +
+                "\n3.Edit Observatory information" +
+                "\nAny other key to quit.");
+        ans=input.nextLine();
+        while(ans.matches("[123]")){
+            if(ans.equals("1")){
+                System.out.println("Below is information on observatory " + curObs.getName() + ":");
+                System.out.println(curObs);
+            }
+            else if (ans.equals("2")){
+                genStatistics(curObs);
+            }
+            else if(ans.equals("3")){
+
+            }
+            else return;
+
+
+
+        }
+
+
+
     }
 
-    public static void createObservatory(Monitoring monitor, Scanner input){
+    public static void createObservatory(){
         System.out.println("Enter the Observatory name: ");
         Set<String> setnames=new HashSet<String>();
         Boolean exists=false;
@@ -111,16 +134,18 @@ public class MonitoringIO {
         }
         while(choice.equals("y")){
             System.out.println("test choice");
-            Galamsey g=createGalamsey(input);
+            Galamsey g=createGalamsey();
             o.addEvent(g);
             System.out.println("Enter another Galamsay event for " + o.getName()+"? Enter \'y\' for yes; any other key for no.");
             choice=input.nextLine();
         }
         o.saveToFile();//should be unnecessary; fix in constructor
+        monitor=new Monitoring();
+
 
     }
 
-    public static Galamsey createGalamsey(Scanner input){
+    public static Galamsey createGalamsey(){
         System.out.println("Enter the Galamsey colour: ");
         String vegColour=input.nextLine();
 
@@ -155,7 +180,13 @@ public class MonitoringIO {
 
     }
 
-    public static void genStatistics(){
+    public static void genStatistics(Observatory o){
+        System.out.println("Largest colour value of Observatory" + o.getName() + ": " + o.getSmallest());
+        System.out.println("Smallest colour value of Observatory" + o.getName() + ": " + o.getLargest());
+        System.out.println("Average colour value of Observatory" + o.getName() + ": " + o.getAverageColor());
+
+
         return;
     }
+
 }
