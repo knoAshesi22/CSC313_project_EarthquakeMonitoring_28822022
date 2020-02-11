@@ -9,14 +9,13 @@ public class Monitoring {
     private ArrayList<Observatory> observatories;
     static final String fileName="observatories.txt";
 
-
-
     public Monitoring(ArrayList<Observatory> observatories) {
         this.observatories = observatories;
     }
 
     public Monitoring() {
         this.observatories = new ArrayList<Observatory>();
+        loadObservatories();
     }
 
     public ArrayList<Observatory> getObservatories() {
@@ -29,51 +28,68 @@ public class Monitoring {
 
 
     public void loadObservatories(){
-      try{
-        Scanner rf = new Scanner(new File(fileName));
-        rf.useDelimiter("[()]|,|\\t");
-        while(rf.hasNextLine()){
-          String n= rf.next();
-          String c= rf.next();
-          Year s= Year.parse(rf.next());
-          double a= rf.nextDouble();
-          ArrayList<Galamsey> e = new ArrayList<Galamsey>();
-          Observatory ob= new Observatory(n,c,s,a,e);
-          observatories.add(ob);
-          while(rf.next()!="\n"){
-            String col= rf.next();
-            double p1= rf.nextDouble();
-            double p2= rf.nextDouble();
-            Year y= Year.parse(rf.next());
-            ob.getEvents().add(new Galamsey(col,new Position(p1,p2),y));
-          }
+        try {
+            Scanner rf = new Scanner(new File(fileName));
+            while (rf.hasNext()){
+                String cline=rf.nextLine();
+//                System.out.println(cline);
+                String[] comp=cline.split("\t\t");
+
+                String[] details=comp[0].split(":::");
+                String name=details[0];
+                String[] details2=details[1].split(" ");
+                String country=details2[0];
+                Year startYear=Year.parse(details2[1]);
+                double area=Double.parseDouble(details2[2]);
+                Observatory o=new Observatory(name,country,startYear,area);
+
+
+                for (String d:comp) {
+                    if(d==comp[0]){
+                        continue;
+                    }
+                    String[] t=d.split(" ");
+                    String color=t[0];
+                    String lat=t[1];
+                    String lon=t[2];
+                    String year=t[3];
+                    Galamsey tg=new Galamsey(color,Double.parseDouble(lat),Double.parseDouble(lon),Year.parse(year));
+                    o.addEvent(tg);
+
+                }
+//                System.out.println(o);
+//                System.out.println("\n\n");
+                this.observatories.add(o);
+            }
+
         }
-      }catch(FileNotFoundException t){t.getMessage();}
+        catch (Exception e){
+            System.out.println(e);
+        }
 
     }
 
     public Observatory largestColVal(){
-      int m=0;
-      Observatory mob = new Observatory();
-      for (Observatory o: observatories){
-        if (o.maxColourValue()>m){
-          m=o.maxColourValue();
-          mob=o;
+        int m=0;
+        Observatory mob = new Observatory();
+        for (Observatory o: observatories){
+            if (o.maxColourValue()>m){
+                m=o.maxColourValue();
+                mob=o;
+            }
         }
-
-      }
-      return mob;
+        return mob;
     }
 
     public int largestColourVal(){
-      return largestColVal().maxColourValue();
+        return largestColVal().maxColourValue();
     }
     public ArrayList<Galamsey> greaterThanVal(int v){
-      ArrayList<Galamsey> fin =new ArrayList<Galamsey>();
-      for(Observatory o: observatories){
-        fin.addAll(o.colValGreaterThan(v));
-      }
-      return fin;
+        ArrayList<Galamsey> fin =new ArrayList<Galamsey>();
+        for(Observatory o: observatories){
+            fin.addAll(o.colValGreaterThan(v));
+        }
+        return fin;
     }
 
 
@@ -149,11 +165,27 @@ public class Monitoring {
      *
      * @return a string representation of the object.
      */
+
     @Override
     public String toString() {
-        return super.toString();
+        String ans="";
+        for (Observatory o:observatories) {
+            ans+=o.toString();
+            ans+="\n";
+        }
+        return ans;
     }
 
+    public String getObservatoryNames(){
+        String ans="";
+        int i=1;
+        for (Observatory o:observatories) {
+            ans+=i+". " + o.getName();
+            ans+="\n";
+            i++;
+        }
+        return ans;
+    }
 
     /**
      * Returns a hash code value for the object. This method is
