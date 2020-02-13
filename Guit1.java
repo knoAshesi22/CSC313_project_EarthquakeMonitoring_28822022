@@ -1,19 +1,15 @@
-import javafx.application.Application;
-import static javafx.application.Application.launch;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.layout.GridPane;
+import javafx.stage.*;
+import javafx.scene.*;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
-import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+import javafx.scene.control.*;
+import javafx.geometry.*;
 
-public class Guit1 extends Application {
-   @Override
-   public void start(Stage stage) {
+public class Guit1 {
+   public static void createNewObsrv() {
+      Stage nwWin = new Stage();
+      nwWin.initModality(Modality.APPLICATION_MODAL);
+      nwWin.setMinWidth(300);
       //creating label email
       Text text1 = new Text("Name");
       Text text2 = new Text("Country");
@@ -66,19 +62,12 @@ public class Guit1 extends Application {
       text2.setStyle("-fx-font: normal bold 20px 'serif' ");
       gridPane.setStyle("-fx-background-color: BEIGE;");
 
-      //Creating a scene object
    Scene scene = new Scene(gridPane);
-
-   //Setting title to the Stage
-   stage.setTitle("Create new observatory");
-
-   //Adding scene to the stage
-   stage.setScene(scene);
+   nwWin.setTitle("Create new observatory");
+   nwWin.setScene(scene);
 
    //Displaying the contents of the stage
-   stage.show();
+   nwWin.showAndWait();
 }
-  public static void main(String args[]){
-     launch(args);
-  }
+
 }

@@ -1,6 +1,7 @@
 import javafx.stage.*;
 import javafx.application.Application;
 import javafx.scene.*;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.geometry.*;
@@ -24,15 +25,15 @@ public class Guit extends Application {
       lab1.setText("Hello, Welcome ");
 
 
-      // Button btn1 = new Button("View observatory data");
-      // btn1.setOnAction(e-> mainStage.setScene(scene2));
-      // Button btn2 = new Button("Add new observatory data");
-      // btn2.setOnAction(e->
-      //  );
+      Button btn1 = new Button("View observatory data");
+      btn1.setOnAction(e-> {mainStage.setScene(scene2);mainStage.show();});
+      Button btn2 = new Button("Add new observatory data");
+      btn2.setOnAction(e->Guit1.createNewObsrv());
       //Add items to panez
 
       Menu FileMenu = new Menu("File");
       MenuItem m1=new MenuItem("Add new observatory");
+      //m1.setOnAction();
       MenuItem m2=new MenuItem("Save");
       MenuItem m3=new MenuItem("Exit");
 
@@ -47,15 +48,17 @@ public class Guit extends Application {
       MenuBar menubar = new MenuBar();
       menubar.getMenus().addAll(FileMenu,EditMenu);
 
-      StackPane pane1 = new StackPane();
+      VBox pane1 = new VBox(30);
+      pane1.getChildren().addAll(menubar,btn2,btn1,lab1);
       Scene scene1 = new Scene(pane1, 640, 480);
-      scene1.setFill(Color.RED);
-      pane1.getChildren().addAll(lab1,menubar);
+      scene1.setFill(Color.rgb(220,100,100,0.55));
 
-
-      // StackPane pane2 = new StackPane();
-      // Scene scene2 = new Scene(pane2, 640, 480);
-      // pane2.getChildren().addAll(lab2,lab3,lab4,lab5,lab6,lab7);
+      Button btn3 = new Button("View more ");
+      Label lab2= new Label();
+      lab2.setText("View observatory data");
+      StackPane pane2 = new StackPane();
+      pane2.getChildren().addAll(lab2,btn3);
+      Scene scene2 = new Scene(pane2, 640, 480);
 
       mainStage.setScene(scene1);
       mainStage.show();
