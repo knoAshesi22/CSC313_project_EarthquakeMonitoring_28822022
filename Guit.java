@@ -12,15 +12,14 @@ import javafx.scene.layout.BorderPane;
 
 
 public class Guit extends Application {
-
-  Stage mainStage;
+  
   Scene scene1, scene2;
 
 @Override
   public void start(Stage stage) {
-      mainStage = stage;
+      Stage mainStage = stage;
 
-      mainStage.setTitle("Galmsey Activity Monitoring Software");
+      mainStage.setTitle("Galamsey Activity Monitoring Software");
       Label lab1 = new Label();
       lab1.setText("Hello, Welcome ");
 
