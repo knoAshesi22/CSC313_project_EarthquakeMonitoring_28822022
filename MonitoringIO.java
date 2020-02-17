@@ -1,8 +1,6 @@
 import com.sun.deploy.util.StringUtils;
 
-import java.lang.reflect.Array;
 import java.time.Year;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -76,13 +74,7 @@ public class MonitoringIO {
             else return;
             System.out.println("Enter a new choice:");
             ans=input.nextLine();
-
-
-
         }
-
-
-
     }
 
     public static void createObservatory(){
@@ -111,7 +103,6 @@ public class MonitoringIO {
             year=input.nextLine();
         }
 
-
         System.out.println("Enter the Observatory area, in km: ");
         String area=input.nextLine();
         while(!area.matches(("\\d+"))){
@@ -135,8 +126,6 @@ public class MonitoringIO {
         }
         o.saveToFile();//should be unnecessary; fix in constructor
         monitor=new Monitoring();
-
-
     }
 
     public static Galamsey createGalamsey(){
@@ -167,20 +156,15 @@ public class MonitoringIO {
         }
         Year y= Year.parse(year);
 
-
         Galamsey g=new Galamsey(vegColour,lt,ln,y);
 
         return g;
-
     }
 
     public static void genStatistics(Observatory o){
         System.out.println("Largest colour value of Observatory" + o.getName() + ": " + o.getSmallest());
         System.out.println("Smallest colour value of Observatory" + o.getName() + ": " + o.getLargest());
         System.out.println("Average colour value of Observatory" + o.getName() + ": " + o.getAverageColor());
-
-
         return;
     }
-
 }
