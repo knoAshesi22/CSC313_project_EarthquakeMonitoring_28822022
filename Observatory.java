@@ -1,13 +1,12 @@
-import jdk.nashorn.internal.runtime.regexp.joni.Regex;
-
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.Year;
-import java.util.HashMap;
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.regex.Pattern;
+import java.util.HashMap;
 
 public class Observatory {
 
@@ -18,9 +17,9 @@ public class Observatory {
     private ArrayList<Galamsey> events;
 
 
-    private  double largest;
-    private  double smallest;
-    private  double sumColor;
+    private double largest;
+    private double smallest;
+    private double sumColor;
 
     static final String fileName="observatories.txt";
 
@@ -112,6 +111,9 @@ public class Observatory {
             details+="\t\t"+gt;
         }
         return details;
+    }
+
+    public void saveToDB(){
 
     }
 
@@ -142,8 +144,6 @@ public class Observatory {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 
     public int maxColourValue(){
@@ -249,10 +249,7 @@ public class Observatory {
                 "Number of events: "+ events.size()+ "\n"+
                 "Events: " +"\n"+ events;
 
-
         return ans;
-
-
     }
 
 
