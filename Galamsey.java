@@ -1,6 +1,3 @@
-//Fields: vegetation colour, colour value, position (latitude and longitude) and year of the event.
-//[6 points] Methods: Accessor (2), Mutator (2), Inherited/Auxiliary (1), Constructor (1)
-
 import java.time.Year;
 import java.util.Calendar;
 import java.util.Objects;
@@ -13,7 +10,6 @@ public class Galamsey {
     private Position position;
     private Calendar yearv2;
     private Year year;
-
 
     public Galamsey(String vegColour, Position position, Year year) {
         this.vegColour = genColourEnum(vegColour);
@@ -40,10 +36,10 @@ public class Galamsey {
 
     public COLOURS genColourEnum(String vegColour){
         try{
-            this.vegColour=COLOURS.valueOf(vegColour.toUpperCase());
+            this.vegColour= COLOURS.valueOf(vegColour.toUpperCase());
         }
         catch(Exception e) {
-            this.vegColour=COLOURS.NA;
+            this.vegColour= COLOURS.NA;
         }
 
         return this.vegColour;
@@ -62,9 +58,7 @@ public class Galamsey {
                 break;
             default:
                 colourValue=0;
-
         }
-
         return colourValue;
     }
 
