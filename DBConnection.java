@@ -1,33 +1,47 @@
 import java.sql.*;
 import java.time.Year;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 public class DBConnection {
 
     static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://localhost/myFirstDB";
+    static final String DB_URL = "jdbc:mysql://localhost/";
 
-    static final String USER = "root";
-    static final String PASS = "dannie777";
+    static String USER = "root";
+    static String PASS = "admin";
     static Connection con = null;
     static Statement stmt = null;
 
     public static void main(String[] args) {
         connectDB();
         createTables();
-        List<Galamsey> gs= getGalamsey(2);
-        for (Galamsey g: gs) {
-            System.out.println(g);
-        }
+//        List<Galamsey> gs= getGalamsey(2);
+//        for (Galamsey g: gs) {
+//            System.out.println(g);
+//        }
 
     }
 
     public static void connectDB(){
+        Scanner input=new Scanner(System.in);
+        System.out.println("Enter username for local server: ");
+        USER=input.nextLine();
+        System.out.println("Enter password for local server: ");
+        PASS=input.nextLine();
+        System.out.println("Enter database name: ");
+        String db=input.nextLine();
+
+
         try{
             con = DriverManager.getConnection(DB_URL,USER,PASS);
+            String sql="Create schema if not exists "+db;
             stmt = con.createStatement();
+            stmt.execute(sql);
+            con = DriverManager.getConnection(DB_URL+db,USER,PASS);
+            stmt = con.createStatement();
+
 
         }
         catch (Exception e){
