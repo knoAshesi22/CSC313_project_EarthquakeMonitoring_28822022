@@ -1,4 +1,4 @@
-package GUI;
+package Console;
 
 //Fields: vegetation colour, colour value, position (latitude and longitude) and year of the event.
 //[6 points] Methods: Accessor (2), Mutator (2), Inherited/Auxiliary (1), Constructor (1)

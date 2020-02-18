@@ -1,4 +1,4 @@
-package GUI;
+package Console;
 
 import java.io.File;
 import java.io.FileOutputStream;

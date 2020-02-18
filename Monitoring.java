@@ -1,4 +1,4 @@
-package GUI;
+package Console;
 
 import java.io.File;
 import java.time.Year;
@@ -13,8 +13,6 @@ public class Monitoring {
     public Monitoring(ArrayList<Observatory> observatories) {
         this.observatories = observatories;
     }
-
-
 
     public Monitoring() {
         this.observatories = new ArrayList<Observatory>();

@@ -1,4 +1,4 @@
-package GUI;
+package Console;
 
 //import com.sun.deploy.util.StringUtils;
 

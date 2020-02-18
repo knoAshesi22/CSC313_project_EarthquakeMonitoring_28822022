@@ -1,4 +1,4 @@
-package GUI;
+package Console;
 
 public class Position {
 
