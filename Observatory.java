@@ -1,13 +1,14 @@
-import jdk.nashorn.internal.runtime.regexp.joni.Regex;
+package GUI;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.Year;
-import java.util.HashMap;
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.regex.Pattern;
+import java.util.HashMap;
 
 public class Observatory {
 
@@ -18,14 +19,13 @@ public class Observatory {
     private ArrayList<Galamsey> events;
 
 
-    private  double largest;
-    private  double smallest;
-    private  double sumColor;
+    private double largest=Double.NaN;
+    private double smallest=Double.NaN;
+    private double sumColor=Double.NaN;
 
-    static final String fileName="observatories.txt";
+    static final String fileName="observatories2.txt";
 
 
-    public Observatory() { }
 
     public Observatory(String name, String country, Year startYear, double area) {
         this.name = name;
@@ -42,6 +42,10 @@ public class Observatory {
         this.area = area;
         this.events = events;
         saveToFile();
+    }
+
+    public Observatory() {
+
     }
 
     public String getName() {
@@ -100,7 +104,7 @@ public class Observatory {
         events.add(event);
         largest=largest>=event.getColourValue()?largest:event.getColourValue();
         smallest=smallest<=event.getColourValue()?smallest:event.getColourValue();
-        sumColor+=event.getColourValue();
+        sumColor=(((Double)sumColor).equals(Double.NaN))?event.getColourValue():sumColor+event.getColourValue();
     }
 
     public String fileFormat(){
@@ -112,14 +116,18 @@ public class Observatory {
             details+="\t\t"+gt;
         }
         return details;
+    }
+
+    public void saveToDB(){
 
     }
 
     public void saveToFile(){
 
         try {
-            String content = new String ( Files.readAllBytes( Paths.get(fileName) ) ).trim();
             File file=new File(fileName);
+            file.createNewFile();
+            String content = new String ( Files.readAllBytes( Paths.get(fileName) ) ).trim();
             PrintWriter writer;
             String pat="^"+name+":::+";
             pat=name+"\\:\\:\\:.+";
@@ -140,10 +148,10 @@ public class Observatory {
 
 
         } catch (IOException e) {
+            File file=new File(fileName);
+
             e.printStackTrace();
         }
-
-
     }
 
     public int maxColourValue(){
@@ -249,10 +257,7 @@ public class Observatory {
                 "Number of events: "+ events.size()+ "\n"+
                 "Events: " +"\n"+ events;
 
-
         return ans;
-
-
     }
 
 

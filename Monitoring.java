@@ -1,17 +1,20 @@
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
+package GUI;
+
+import java.io.File;
 import java.time.Year;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
-import java.io.File;
 
 public class Monitoring {
     private ArrayList<Observatory> observatories;
-    static final String fileName="observatories.txt";
+    static final String fileName="observatories2.txt";
 
     public Monitoring(ArrayList<Observatory> observatories) {
         this.observatories = observatories;
     }
+
+
 
     public Monitoring() {
         this.observatories = new ArrayList<Observatory>();
@@ -29,6 +32,8 @@ public class Monitoring {
 
     public void loadObservatories(){
         try {
+            File file=new File(fileName);
+            file.createNewFile();
             Scanner rf = new Scanner(new File(fileName));
             while (rf.hasNext()){
                 String cline=rf.nextLine();
@@ -57,16 +62,12 @@ public class Monitoring {
                     o.addEvent(tg);
 
                 }
-//                System.out.println(o);
-//                System.out.println("\n\n");
                 this.observatories.add(o);
             }
-
         }
         catch (Exception e){
             System.out.println(e);
         }
-
     }
 
     public Observatory largestColVal(){
@@ -91,7 +92,6 @@ public class Monitoring {
         }
         return fin;
     }
-
 
     /**
      * Indicates whether some other object is "equal to" this one.
