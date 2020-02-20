@@ -2,14 +2,15 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
-import static GUI.Guit1.test;
 
 public class Guit extends Application {
 
@@ -38,25 +39,25 @@ public class Guit extends Application {
         MenuItem fm1=new MenuItem("Add new observatory");
 
         //fm1.setOnAction();
-        MenuItem fm2=new MenuItem("Save");
-        MenuItem fm3=new MenuItem("Exit");
-        FileMenu.getItems().addAll(fm1,fm2,fm3);
-
-        Menu EditMenu=new Menu("Edit");
-        MenuItem em1=new MenuItem("Edit Observatory information");
-        MenuItem em2=new MenuItem("View observatories");
-        MenuItem em3=new MenuItem("Delete observatory");
-        EditMenu.getItems().addAll(em1,em2,em3);
-
-        MenuBar menubar = new MenuBar();
-        menubar.getMenus().addAll(FileMenu,EditMenu);
+//        MenuItem fm2=new MenuItem("Save");
+//        MenuItem fm3=new MenuItem("Exit");
+//        FileMenu.getItems().addAll(fm1,fm2,fm3);
+//
+//        Menu EditMenu=new Menu("Edit");
+//        MenuItem em1=new MenuItem("Edit Observatory information");
+//        MenuItem em2=new MenuItem("View observatories");
+//        MenuItem em3=new MenuItem("Delete observatory");
+//        EditMenu.getItems().addAll(em1,em2,em3);
+//
+//        MenuBar menubar = new MenuBar();
+//        menubar.getMenus().addAll(FileMenu,EditMenu);
 
         VBox pane1 = new VBox(30);
         VBox temppane = new VBox(20);
         pane1.setStyle("-fx-background-color: BEIGE;");
         temppane.setAlignment(Pos.CENTER);
         temppane.getChildren().addAll(lab1,btn2,btn1);
-        pane1.getChildren().addAll(menubar,temppane);
+        pane1.getChildren().addAll(/*menubar,*/temppane);
         scene1 = new Scene(pane1, 640, 480);
         scene1.setFill(Color.rgb(220,100,100,0.55));
 
