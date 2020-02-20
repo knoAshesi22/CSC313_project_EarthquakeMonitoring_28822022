@@ -4,56 +4,52 @@ import java.util.Objects;
 
 public class Galamsey {
 
-    private enum COLOURS{GREEN,YELLOW,BROWN,NA};
-    private COLOURS vegColour;
+    private String vegColour;
     private int colourValue;
     private Position position;
     private Calendar yearv2;
     private Year year;
 
     public Galamsey(String vegColour, Position position, Year year) {
-        this.vegColour = genColourEnum(vegColour);
+        this.vegColour = parseColor(vegColour);
         this.position = position;
         this.year = year;
         this.colourValue=genColourValue(this.vegColour);
     }
 
     public Galamsey(String vegColour, double lat, double lon, Year year) {
-        this.vegColour = genColourEnum(vegColour);
+        this.vegColour = parseColor(vegColour);
         this.position = new Position(lat,lon);
         this.year = year;
         this.colourValue=genColourValue(this.vegColour);
     }
 
-    public static COLOURS[] getPossibleColours(){
-        return COLOURS.values();
-    }
 
 
-    public COLOURS getVegColour() {
+    public String getVegColour() {
         return vegColour;
     }
 
-    public COLOURS genColourEnum(String vegColour){
-        try{
-            this.vegColour= COLOURS.valueOf(vegColour.toUpperCase());
-        }
-        catch(Exception e) {
-            this.vegColour= COLOURS.NA;
-        }
+    public String parseColor(String vegColour){
 
-        return this.vegColour;
+        vegColour=vegColour.toUpperCase();
+        if(vegColour.equals("GREEN")||vegColour.equals("YELLOW")||vegColour.equals("BROWN")){
+            return vegColour;
+        }
+        else {
+            return "NA";
+        }
     }
 
-    public int genColourValue(COLOURS vegColour){
-        switch (vegColour){
-            case GREEN:
+    public int genColourValue(String vegColour){
+        switch (vegColour.toUpperCase()){
+            case "GREEN":
                 colourValue=1;
                 break;
-            case YELLOW:
+            case "YELLOW":
                 colourValue=2;
                 break;
-            case BROWN:
+            case "BROWN":
                 colourValue=3;
                 break;
             default:
@@ -62,7 +58,7 @@ public class Galamsey {
         return colourValue;
     }
 
-    public void setVegColour(COLOURS vegColour) {
+    public void setVegColour(String vegColour) {
         this.vegColour = vegColour;
     }
 
